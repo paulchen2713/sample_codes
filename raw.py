@@ -60,13 +60,16 @@ def get_shape(matrix):
 get_shape(rd_matrix)
 np.savetxt('D:/BeginnerPythonProjects/read_carrada/logs/000117_256_64.txt', rd_matrix, delimiter=' ')
 
-plt.plasma() 
-plt.imshow(rd_matrix, aspect='auto', extent=[0, 1, 0, 1])
+plt.plasma()
+plt.imshow(rd_matrix, extent=[0, 1, 0, 1])
+# plt.xlim(-13.5, 13.5)
+# plt.ylim(0, 50)
 plt.savefig("D:/BeginnerPythonProjects/read_carrada/figs/000117_256_64.png")
 
 # get_shape(ra_matrix)
 # np.savetxt('D:/BeginnerPythonProjects/read_carrada/logs/000117_256_256.txt', ra_matrix, delimiter=' ')
 # plt.imshow(ra_matrix, extent=[0, 1, 0, 1])
-# plt.plot(ra_matrix)
+# plt.savefig("D:/BeginnerPythonProjects/read_carrada/figs/000117_256_256.png")
 
 plt.show()
+
