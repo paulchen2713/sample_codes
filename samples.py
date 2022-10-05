@@ -11,6 +11,7 @@ Created on Tue Oct 04 19:34:27 2022
     ipython     7.16.1
     ipykernel   5.3.4
     numpy       1.19.5 (numpy-base 1.19.2)
+    scipy       1.5.4
     torch       1.10.2
     torchvision 0.11.3
     matplotlib  3.3.4
@@ -23,7 +24,7 @@ import json
 import numpy as np
 from IPython.display import Image
 
-from carrada_dataset.utils import CARRADA_HOME
+# from carrada_dataset.utils import CARRADA_HOME
 from carrada_dataset.utils.configurable import Configurable
 from carrada_dataset.utils.visualize_signal import SignalVisualizer
 from carrada_dataset.utils.transform_annotations import AnnotationTransformer
