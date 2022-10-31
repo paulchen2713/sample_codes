@@ -84,7 +84,7 @@ for dir_name in dir_names: # [23:24]:
         # plt.show()
 
 toc = time.perf_counter()
-duration = tic - toc
-print(f"Downloaded the tutorial in {toc - tic:0.4f} seconds")
-print(f"duration: {duration:0.4f}")
+duration = toc - tic
+print(f"duration: {duration:0.4f} seconds") # duration: 1233.5710 seconds
+
 
