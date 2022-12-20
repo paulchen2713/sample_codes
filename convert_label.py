@@ -39,7 +39,7 @@ def read_txt_file(file_name=""):
 def main():
     dir_names = read_txt_file("validated_seqs.txt")
 
-    for dir_name in dir_names[23:24]: # : # 
+    for dir_name in dir_names: # [23:24]: # 
         # e.g. "D:/Datasets/CARRADA/2019-09-16-12-58-42/annotations/box/"
         print(f"current directory: {dir_name}")
 
@@ -59,12 +59,12 @@ def main():
         all_keys = list(data.keys())
         # print(data[f"{all_keys[0]}"]["boxes"])  # [[69, 32, 72, 35]] <class 'list'>
         # print(data[f"{all_keys[0]}"]["labels"]) # [1] <class 'list'>
-
-        for key in all_keys[62:63]: # : # 
+        
+        for key in all_keys: # [62:63]: # 
             print(f"frame name: \"{key}\"")
 
             # paths of RD_maps and RA_maps
-            RDM_PATH = f"D:/Datasets/CARRADA2/RD2/{dir_name}/labels/" # path that we store our labels
+            RDM_PATH = f"D:/Datasets/CARRADA2/RD_Pascal_VOC/{dir_name}/labels/" # path that we store our labels
             RAM_PATH = f"D:/Datasets/CARRADA2/RA/{dir_name}/labels/" # path that we store our labels
 
             # we have to set 2 different paths of 'RDM_PATH' or 'RAM_PATH',
@@ -88,11 +88,12 @@ def main():
                             print(data[key]['boxes'][index])
                             print(data[key]['labels'][index])
                             print(f"class_index = {class_index}")
-
+                        
                         # [x, y, width, height] is COCO format in absolute scale
                         # [x_min, y_min, x_max, y_max] is Pascal_VOC format in absolute scale
                         x_min, y_min, x_max, y_max = data[key]['boxes'][index][0:4]   # extract Pascal_VOC / COCO format in absolute scale
-                        print(f"(class, x_min, y_min, x_max, y_max) = ({class_index} {x_min} {y_min} {x_max} {y_max})")
+                        if mode == 'debug':
+                            print(f"(class, x_min, y_min, x_max, y_max) = ({class_index} {x_min} {y_min} {x_max} {y_max})")
 
                         if out_type == 'YOLO':
                             """
@@ -108,7 +109,8 @@ def main():
                             if mode == 'debug':
                                 print(f"(class, x, y, w, h) = ({class_index}, {x}, {y}, {w}, {h}) in relative scale")
 
-                            print(f"{class_index} {x} {y} {w} {h}", file=label_txt_file) # redirect 'print()' output to a file
+                            if store == True:
+                                print(f"{class_index} {x} {y} {w} {h}", file=label_txt_file) # redirect 'print()' output to a file
                         elif out_type == 'COCO':
                             """
                             make sure it's [class_id, x, y, width, height] in absolute value
@@ -119,7 +121,8 @@ def main():
                             if mode == 'debug':
                                 print(f"(class, x, y, w, h) = ({class_index}, {x}, {y}, {w}, {h}) in absolute value")
                             
-                            print(f"{class_index} {x} {y} {w} {h}", file=label_txt_file) # redirect 'print()' output to a file
+                            if store == True:
+                                print(f"{class_index} {x} {y} {w} {h}", file=label_txt_file) # redirect 'print()' output to a file
                         elif out_type == 'Pascal_VOC':
                             """
                             make sure it's [class_id, x_min, y_min, x_max, y_max] in relative scale
@@ -132,17 +135,19 @@ def main():
                             if mode == 'debug':
                                 print(f"(class, x_min, y_min, x_max, y_max) = ({class_index} {x_min} {y_min} {x_max} {y_max}) in relative scale")
                             
-                            print(f"{class_index} {x_min} {y_min} {x_max} {y_max}", file=label_txt_file) # redirect 'print()' output to a file
+                            if store == True:
+                                print(f"{class_index} {x_min} {y_min} {x_max} {y_max}", file=label_txt_file) # redirect 'print()' output to a file
                         # print("---------------------------")
             
             # call out store_labels function to extract the labels that we need
             store_labels(
-                RDM_PATH,     # data_path=RDM_PATH or RAM_PATH
-                'RDM',        # data_type='RDM' or 'RAM'
-                'Pascal_VOC', # out_type='YOLO', 'COCO' or 'Pascal_VOC'
-                ''
+                data_path=RDM_PATH,     # data_path=RDM_PATH or RAM_PATH
+                data_type='RDM',        # data_type='RDM' or 'RAM'
+                out_type='Pascal_VOC',  # out_type='YOLO', 'COCO' or 'Pascal_VOC'
+                mode='',                # mode='debug' # means print everything out
+                store=True              # store=True # means renew the .txt label, visa vera
             ) 
-
+            
 
 
 if __name__ == '__main__':
@@ -155,4 +160,7 @@ if __name__ == '__main__':
     # rd_matrix duration: 4.6774586 seconds
     # ra_matrix duration: 4.3379489 seconds
     
+
+
+
 
